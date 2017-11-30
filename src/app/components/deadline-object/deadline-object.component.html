@@ -1,0 +1,11 @@
+<ul *ngIf = "deadlines" class="list-group">
+
+  <ng-container *ngFor = "let frist of deadlines.deadlines">
+    <li class="list-group-item">
+        <app-deadline-box [deadline] = "frist"></app-deadline-box> 
+    </li>  
+  </ng-container>
+    
+</ul>
+    
+    

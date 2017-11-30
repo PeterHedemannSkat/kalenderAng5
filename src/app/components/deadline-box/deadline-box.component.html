@@ -1,0 +1,42 @@
+<div class = "center-deadlines">
+  <div class = "row">
+      <div class = "col-md-6">
+          
+          <div class="period-print">
+            <img [src] = "srcGroupIcon()" class = "icon-small icon-inside-button">
+            <span class="main-category"> {{printMainLabel()}} </span>
+            {{printPeriod()}} 
+          </div> 
+            
+          <div class="period-date">
+            {{print_date()}}
+          </div>      
+      </div>
+
+      <div class = "col-md-6">
+          <div class = "deadline-options">
+              <div>     
+                  <span *ngFor = "let laeringspakke of getLaeringsPakker()" >       
+                      <a [href] = "getUrlOfLaeringsPakke(laeringspakke)" target="_blank">
+                        <button type = "button" class = "laeringspakke">
+                            <img [src] = "srcOfIcon(laeringspakke)" class = "icon-small icon-inside-button">  
+                          Lær om {{getLaeringsPakkeNavn(laeringspakke)}}
+                        </button>  
+                    </a>
+                  </span>       
+              </div>
+              <div>   
+                  <span class = "glyphicon glyphicon-calendar"></span>
+                  <button type = "button" class = "as-anchor">
+                    Tilføj til kalender
+                  </button>
+
+              </div>            
+          </div>   
+      </div>  
+
+  </div>
+</div>
+
+
+

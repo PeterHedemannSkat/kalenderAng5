@@ -1,18 +1,47 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { AppComponent } from './app.component';
+import { CalenderServices } from './sharedServices/dateServices';
+import { MathCalc } from './sharedServices/math.services';
+import { Deadline } from './deadlineBaseAlgorithm/getDeadline';
+import { ExternalData } from './externalDataStore/dataStore';
+import { DeadlinesFromDates } from './getDeadlinesFromDates/DeadlinesFromDates';
+import { Texts } from './textServices/testServices';
+import { TxtSharedService } from './TxtSharedService/txtSharedService';
+import { DeadlineBoxComponent } from './components/deadline-box/deadline-box.component';
+import { DeadlineObjectComponent } from './components/deadline-object/deadline-object.component';
+import { DeadlineGodtForStartComponent } from './components/deadline-godt-for-start/deadline-godt-for-start.component';
+import { LaeringsPakkeService } from './laeringsPakkerLogik/laeringsPakke';
+import { UrlRessourceService } from './urlRessource/urlressource';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DeadlineBoxComponent,
+    DeadlineObjectComponent,
+    DeadlineGodtForStartComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpModule
+    //, InMemoryWebApiModule.forRoot( ExternalData )
   ],
-  providers: [],
+  providers: [
+    CalenderServices,
+    MathCalc,
+    Deadline,
+    DeadlinesFromDates,
+    Texts,
+    TxtSharedService,
+    LaeringsPakkeService,
+    UrlRessourceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

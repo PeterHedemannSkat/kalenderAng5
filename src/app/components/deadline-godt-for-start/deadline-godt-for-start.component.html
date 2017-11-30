@@ -1,0 +1,16 @@
+   
+<div *ngFor = "let month of data; let i = index">
+  
+  <h3 class = "text-center">{{printMonth(month.month)}}</h3>
+  <ul class="list-group deadline-list">
+    <ng-container *ngFor = "let period of month.deadlines; let l = index">
+        <li class="list-group-item" [class.odd-list-item] = "isOddListItem(i, l)"> 
+            <app-deadline-box [deadline] = "period"></app-deadline-box>
+        </li>   
+    </ng-container>
+  </ul>
+  
+</div>
+
+
+        

@@ -1,1 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background: #a6f4f754 !important
+}
+
+.frist-main {
+    padding:0.5em 0;
+}
+
+.main-category {
+    font-weight: bold;
+}
+
+.period-print {
+    padding-left: 3em;
+}
+
+.period-date {
+    padding-left: 3em;
+}
+
+.center-deadlines {
+    margin: 0 auto;
+    width: 45em;
+}
+
+.deadline-options > div {
+    padding: 0.5em 0;
+}
+
+.list-group-item.odd-list-item {
+    background: #ececece6;
+
+}
+
+button.laeringspakke {
+    padding: 0.3em 1.3em;
+    padding-left: 3em;
+    background: purple;
+    color: white;
+}
+
+button.as-anchor {
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+}
+
+.icon-inside-button {
+    max-height: 1.5em;
+    max-width: 1.5em;
+    position: absolute;
+    left: 2em;
+}
