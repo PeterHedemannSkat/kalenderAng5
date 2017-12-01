@@ -27,11 +27,15 @@
               </div>
               <div>   
                   <span class = "glyphicon glyphicon-calendar"></span>
-                  <button type = "button" class = "as-anchor">
+                  <button type = "button" class = "as-anchor" (click) = "toogleCalenderTransferOpen = true">
                     Tilføj til kalender
                   </button>
 
-              </div>            
+              </div>
+             
+                <app-transfer-to-calender [hidden] = "!toogleCalenderTransferOpen" [deadline] = "deadline"></app-transfer-to-calender>   
+              
+                    
           </div>   
       </div>  
 

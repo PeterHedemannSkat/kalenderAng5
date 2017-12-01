@@ -235,7 +235,7 @@ export class CalenderServices {
         return copy;
     }
 
-    private resetDate (date: Date) {
+    public resetDate (date: Date) {
 
         const resetDate = this.copyDate(date);
 

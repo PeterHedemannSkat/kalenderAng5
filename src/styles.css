@@ -52,3 +52,8 @@ button.as-anchor {
     position: absolute;
     left: 2em;
 }
+
+.very-small-icon {
+    max-height: 1em;
+    max-width: 1em;
+}

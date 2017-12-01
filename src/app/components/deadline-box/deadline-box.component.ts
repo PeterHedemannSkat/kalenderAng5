@@ -21,6 +21,7 @@ import { UrlRessourceService } from '../../urlRessource/urlressource';
 export class DeadlineBoxComponent implements OnInit {
 
   txt: GetText = new GetText();
+  toogleCalenderTransferOpen = false;
 
   @Input()
   deadline: DeadlineUnit;

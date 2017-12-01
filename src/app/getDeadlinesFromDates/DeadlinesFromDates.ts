@@ -8,12 +8,16 @@ import { DeadlineUnit, EdgeDate, DeadlineRequest } from './deadlineUnit';
 
 import { periodsMap } from '../dataMapping/periodsPrYearOfFrister';
 import { rateTypes } from '../dataMapping/fristerTypes';
+import { CalenderServices } from '../sharedServices/dateServices';
 
 
 @Injectable()
 export class DeadlinesFromDates {
 
-    constructor (public _deadline: Deadline) {}
+    constructor (
+        public _deadline: Deadline,
+        public _dateService: CalenderServices
+    ) {}
 
     public getSpecificNumberOfDeadlinesFromDate(numbers: number, types: string[], date: Date, direction: string) {
 
@@ -141,6 +145,9 @@ export class DeadlinesFromDates {
     public getBorderDeadline(id: string, date: Date, direction: string) {
 
         const isRegularType = !rateTypes.find(el => el === id);
+
+        date = this._dateService.resetDate(date);
+
         return isRegularType ? this.getBorderDeadlineDate_(id, date, direction) : this.getBorderDeadline_rateType(id, date, direction);
     }
 
@@ -169,7 +176,8 @@ export class DeadlinesFromDates {
 
         return Observable.merge(...container)
             .filter(el => {
-                return (direction === 'from') ? date <= el.date : date >= el.date;
+                const isEqual = date.getTime() === el.date.getTime();
+                return (direction === 'from') ? (date < el.date || isEqual) : (date > el.date || isEqual);
             })
             .reduce((acc, el) => {
                 return (direction === 'from')
@@ -192,7 +200,8 @@ export class DeadlinesFromDates {
 
                 return this.getDeadlinesFromPeriods(fromPeriod, toPeriod, id)
                     .filter(el => {
-                        return (direction === 'from') ? el.date >= date : el.date <= date;
+                        const isEqual = date.getTime() === el.date.getTime();
+                        return (direction === 'from') ? (date < el.date || isEqual) : (date > el.date || isEqual);
                     })
                     .reduce((acc, val) => {
                         return (direction === 'from')

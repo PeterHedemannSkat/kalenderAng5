@@ -17,6 +17,8 @@ import { DeadlineObjectComponent } from './components/deadline-object/deadline-o
 import { DeadlineGodtForStartComponent } from './components/deadline-godt-for-start/deadline-godt-for-start.component';
 import { LaeringsPakkeService } from './laeringsPakkerLogik/laeringsPakke';
 import { UrlRessourceService } from './urlRessource/urlressource';
+import { TransferToCalenderService } from './transferCalender/transferToCalender';
+import { TransferToCalenderComponent } from './components/transfer-to-calender/transfer-to-calender.component';
 
 
 @NgModule({
@@ -24,13 +26,14 @@ import { UrlRessourceService } from './urlRessource/urlressource';
     AppComponent,
     DeadlineBoxComponent,
     DeadlineObjectComponent,
-    DeadlineGodtForStartComponent
+    DeadlineGodtForStartComponent,
+    TransferToCalenderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
-    //, InMemoryWebApiModule.forRoot( ExternalData )
+  , InMemoryWebApiModule.forRoot( ExternalData )
   ],
   providers: [
     CalenderServices,
@@ -40,7 +43,8 @@ import { UrlRessourceService } from './urlRessource/urlressource';
     Texts,
     TxtSharedService,
     LaeringsPakkeService,
-    UrlRessourceService
+    UrlRessourceService,
+    TransferToCalenderService
   ],
   bootstrap: [AppComponent]
 })
