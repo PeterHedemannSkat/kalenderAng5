@@ -3,7 +3,8 @@ class DynamicDateSearch {
         public heading: string,
         public onWeekends: boolean,
         public onHolidays: boolean,
-        public special?: string
+        public special?: string,
+        public specialweekdays?: number[]
 
     ) {}
 }

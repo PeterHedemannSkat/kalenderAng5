@@ -1,0 +1,8 @@
+<ul class="list-group deadline-list" *ngIf = "data">
+    <li *ngFor = "let frist of data.deadlines; let i = index" class="list-group-item">
+        <app-regular-deadline-box [deadline] = "frist"></app-regular-deadline-box>
+    </li>
+</ul>
+
+    
+

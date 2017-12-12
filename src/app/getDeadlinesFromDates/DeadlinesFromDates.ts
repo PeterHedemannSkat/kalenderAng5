@@ -23,19 +23,6 @@ export class DeadlinesFromDates {
 
         return this
             .getSpecificNumberOfDeadlinesFromDate_(numbers, types, date, direction)
-            .toArray()
-            .map(el => {
-
-                return el.sort((a, b) => {
-                    if (a.date < b.date) {
-                        return -1;
-                    } else if (a.date === b.date) {
-                        return 0;
-                    } else if (a.date > b.date) {
-                        return 1;
-                    }
-                });
-            })
             .map(el => {
 
                 const
@@ -78,7 +65,7 @@ export class DeadlinesFromDates {
                             id = currentPeriod.id,
                             periodNumbers = periodsMap.find(el_ => el_.deadLineIDs.indexOf(id) > -1).periods,
                             isRateType = rateTypes.find(el_ => id === el_),
-                            rates = isRateType ? currentPeriod.rate : null;
+                            rates = isRateType ? RateMaster.find(el_ => el_.id.indexOf(id) > -1).baseDate.monthsAfterBase.length : null;
 
                         const
                             periodStart_ = new PeriodEntity(currentPeriod, periodNumbers, rates),
@@ -93,7 +80,20 @@ export class DeadlinesFromDates {
 
         return Observable
             .merge( ...allObs)
-            .flatMap(el => el);
+            .flatMap(el => el)
+            .toArray()
+            .map(el => {
+
+                return el.sort((a, b) => {
+                    if (a.date < b.date) {
+                        return -1;
+                    } else if (a.date === b.date) {
+                        return 0;
+                    } else if (a.date > b.date) {
+                        return 1;
+                    }
+                });
+            });
 
     }
 

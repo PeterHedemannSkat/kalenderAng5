@@ -172,11 +172,13 @@ export class Deadline {
         const
             dayInMonth = (isNonRateType) ? regDay : rateDay,
             newDateDivider = new Date(newYear, newMonth, dayInMonth),
-            excludeRaw = (isNonRateType) ? ruleProto.searchParameters : rateProto.searchParameters,
-            exclude = [excludeRaw].map(el => {
-                return {weekends: el.onWeekends, holidays: el.onHolidays};
-            })[0],
-            theDate = this._calender.findClosest(newDateDivider, direction, exclude);
+            excludeRaw = (isNonRateType) ? ruleProto.searchParameters : rateProto.searchParameters;
+        const exclude = [excludeRaw].map(el => {
+                return {weekends: el.onWeekends, holidays: el.onHolidays, specificWeekdays: el.specialweekdays };
+            })[0];
+
+
+        const theDate = this._calender.findClosest(newDateDivider, direction, exclude);
 
             return theDate;
 

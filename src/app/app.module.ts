@@ -19,6 +19,8 @@ import { LaeringsPakkeService } from './laeringsPakkerLogik/laeringsPakke';
 import { UrlRessourceService } from './urlRessource/urlressource';
 import { TransferToCalenderService } from './transferCalender/transferToCalender';
 import { TransferToCalenderComponent } from './components/transfer-to-calender/transfer-to-calender.component';
+import { RegularDeadlineBoxComponent } from './components/regular-deadline-box/regular-deadline-box.component';
+import { SkatdkCalenderListComponent } from './components/skatdk-calender-list/skatdk-calender-list.component';
 
 
 @NgModule({
@@ -27,13 +29,15 @@ import { TransferToCalenderComponent } from './components/transfer-to-calender/t
     DeadlineBoxComponent,
     DeadlineObjectComponent,
     DeadlineGodtForStartComponent,
-    TransferToCalenderComponent
+    TransferToCalenderComponent,
+    RegularDeadlineBoxComponent,
+    SkatdkCalenderListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
-  , InMemoryWebApiModule.forRoot( ExternalData )
+  //, InMemoryWebApiModule.forRoot( ExternalData )
   ],
   providers: [
     CalenderServices,

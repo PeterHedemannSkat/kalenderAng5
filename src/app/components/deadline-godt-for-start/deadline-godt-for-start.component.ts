@@ -40,4 +40,19 @@ export class DeadlineGodtForStartComponent implements OnInit {
     return  (items % 2 !== 0) ? true : false;
   }
 
+  newYear(index: number) {
+
+    const cur = this.data[index].year;
+
+    if (index > 0) {
+
+      const prev = this.data[index - 1].year;
+      return prev !== cur ? cur : '';
+
+    } else {
+      return cur;
+    }
+
+  }
+
 }

@@ -7,6 +7,7 @@ export interface ExcludeDates {
         sundays?: boolean;
         holidays?: boolean;
         bankholidays?: boolean;
+        specificWeekdays?: number[];
 
     }
 
@@ -175,6 +176,7 @@ export class CalenderServices {
             isholiday = function (date_: Date) {return self.isHoliday(date_); },
             isbankHol = function (date_: Date) {return self.isBankHoliday(date_); };
 
+
         const val: Function[] = [];
 
         const direction: number = (flow === 'forward') ? 1 : -1;
@@ -189,6 +191,19 @@ export class CalenderServices {
 
         if (exclude.bankholidays) {
             val.push(isbankHol);
+        }
+
+        if (exclude.specificWeekdays) {
+            val.push((date_: Date) => {
+
+                const excl = exclude.specificWeekdays;
+
+                const dayEqual = excl.reduce((state, cur) => {
+                    return cur === date_.getDay() ? true : state;
+                }, false);
+
+                return dayEqual;
+            });
         }
 
 

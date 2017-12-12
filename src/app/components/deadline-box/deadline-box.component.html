@@ -1,6 +1,7 @@
 <div class = "center-deadlines">
   <div class = "row">
-      <div class = "col-md-6">
+    <!-- janus ændring -->
+      <div class = "col-md-3 col-md-offset-3">
           
           <div class="period-print">
             <img [src] = "srcGroupIcon()" class = "icon-small icon-inside-button">
@@ -27,7 +28,7 @@
               </div>
               <div>   
                   <span class = "glyphicon glyphicon-calendar"></span>
-                  <button type = "button" class = "as-anchor" (click) = "toogleCalenderTransferOpen = true">
+                  <button type = "button" class = "as-anchor" (click) = "toogleCalenderTransferOpen = !toogleCalenderTransferOpen">
                     Tilføj til kalender
                   </button>
 

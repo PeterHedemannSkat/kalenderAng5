@@ -15,7 +15,7 @@ const masterRules: DeadLineRule[] = [
     new DeadLineRule(
         ['selvangivelse'],
         new BaseDate(6, 1),
-        baseForwardDynamicSearch
+        new DynamicDateSearch('>', false, true, '-', [5, 6]) /* hvis fredag/lørdag rykkes det til søndag  */
     ),
     new DeadLineRule(
         ['moms_halvaar', 'moms_kvartal'],

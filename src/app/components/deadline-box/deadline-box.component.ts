@@ -12,13 +12,15 @@ import { environment } from '../../../environments/environment';
 import { iconMapping } from '../../dataMapping/iconUrlMap';
 import { iconNames } from '../../dataMapping/iconOfMainDeadLines';
 import { UrlRessourceService } from '../../urlRessource/urlressource';
+import { PrintDeadlinesService } from '../../printDeadlines/printDeadlines';
 
 
 @Component({
   selector: 'app-deadline-box',
   templateUrl: './deadline-box.component.html',
+  providers: [PrintDeadlinesService]
 })
-export class DeadlineBoxComponent implements OnInit {
+export class DeadlineBoxComponent implements OnInit  {
 
   txt: GetText = new GetText();
   toogleCalenderTransferOpen = false;
@@ -29,7 +31,8 @@ export class DeadlineBoxComponent implements OnInit {
   constructor(
     public _txtService: TxtSharedService,
     public _laeringspakker: LaeringsPakkeService,
-    public _UrlRessourceService: UrlRessourceService
+    public _UrlRessourceService: UrlRessourceService,
+    public _txtDeadline: PrintDeadlinesService
 
 ) {}
 
@@ -66,77 +69,24 @@ export class DeadlineBoxComponent implements OnInit {
   }
 
   printMainLabel() {
-    const
-      mainTypeID = textMapper.find(el => el.types.indexOf(this.deadline.period.id) > -1).id;
-
-    return `${this._txtService.txt.get(mainTypeID)}`;
+    return this._txtDeadline.printMainLabel(this.deadline);
   }
 
   printPeriod() {
-
-    return `${this.print_subCategory()}
-      ${this._txtService.txt.get('for')} ${this.print_forPeriod()} ${this.deadline.period.year}`;
-
+    return this._txtDeadline.printPeriod(this.deadline);
   }
 
-print_forPeriod() {
+  print_forPeriod() {
+    return this._txtDeadline.print_forPeriod(this.deadline);
+  }
 
-    const periods = periodsMap.find(el => el.deadLineIDs.indexOf(this.deadline.period.id) > -1).periods;
+  print_subCategory() {
+    return this._txtDeadline.print_subCategory(this.deadline);
+  }
 
-    switch (periods) {
-        case 1:
-        return this._txtService.txt.get('aar');
-        case 2:
-        return `${this.deadline.period.period}. ${this._txtService.txt.get('halvaar')}`;
-        case 4:
-        return `${this.deadline.period.period}. ${this._txtService.txt.get('kvartal')}`;
-        case 12:
-        const
-            monthNum = this.deadline.period.period - 1,
-            monthName = this._txtService.txt
-            .getGroup('monthNames')
-            .find(el => el.id === monthNum.toString());
-
-        return monthName ? monthName.txt : '';
-
-    }
-}
-
-print_subCategory() {
-
-    const isRegular = rateTypes.indexOf(this.deadline.period.id) === -1;
-
-    if (isRegular) {
-
-        const
-        containsSub = textMapper.find(el => el.types.indexOf(this.deadline.period.id) > -1).types.length > 1;
-
-        return containsSub ? this._txtService.txt.get(this.deadline.period.id, 'subTitles') : '' ;
-
-    } else {
-
-        return `${this.deadline.period.rate}. ${this._txtService.txt.get('rate')}`;
-
-    }
-
-}
-
-print_date() {
-
-const
-    date = this.deadline.date,
-    weekdays_ = this._txtService.txt.getGroup('weekdays'),
-    months_ = this._txtService.txt.getGroup('monthNames'),
-    year = date.getFullYear(),
-    weekdayName_ = weekdays_.find(el => el.id === date.getDay().toString()),
-    monthName_ = months_.find(el => el.id === date.getMonth().toString()),
-    weekdayName = weekdayName_ ? weekdayName_.txt : '',
-    monthName = monthName_ ? monthName_.txt : '';
-
-return `${weekdayName} ${date.getDate()}. ${monthName} ${year}`;
-
-}
-
+  print_date() {
+    return this._txtDeadline.print_date(this.deadline);
+  }
 
 
 }

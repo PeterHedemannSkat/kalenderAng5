@@ -13,9 +13,11 @@ import { textMapper } from './dataMapping/textMapper';
 import { periodsMap } from './dataMapping/periodsPrYearOfFrister';
 import { rateTypes } from './dataMapping/fristerTypes';
 import { TxtSharedService } from './TxtSharedService/txtSharedService';
+import { PeriodEntity } from './periodClass/periodClass';
 
 export interface MonthHolder {
   month: number;
+  year: number;
   deadlines: DeadlineUnit[];
 }
 
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit {
 
   ) {}
 
+  visGodtFraStart = true;
   antalFrister_ = 3;
 
   get antalFrister() {
@@ -55,6 +58,13 @@ export class AppComponent implements OnInit {
     this.deadLineMainObs = this.getDeadlinesObs();
     this.godtFraStartObs = this.monthDivisorStructure();
 
+
+    this._abstract.getSpecificNumberOfDeadlinesFromDate_(5, this.getAllTypes(), new Date(), 'to')
+      .subscribe(el => {
+        console.log(el);
+      });
+
+
   }
 
   normalTypes() {
@@ -65,7 +75,8 @@ export class AppComponent implements OnInit {
 
     const
       antalFrister = this.antalFrister_,
-      types =  this.getAllTypes(),
+      single = ['selvangivelse'],
+      types = this.normalTypes(),
       date = new Date(),
       direction = 'from';
 
@@ -84,6 +95,8 @@ export class AppComponent implements OnInit {
    *    - oven i denne, hvis nej overskrives prop med nye seneste dag, indeholdende frister
    *    - frister visr fra tidligste (oppe) fristdato
    *    - hvis alle ikke er vist for seneste dato, skal side 2 vise fra seneste dato, dog ikke dem er vist
+   *  tidligste dato => viste
+   *  seneste dato => viste --- hvis tidligste og seneste er ens?
    */
 
   monthDivisorStructure() {
@@ -97,7 +110,11 @@ export class AppComponent implements OnInit {
           monthsContainer: MonthHolder[] = [];
 
         deadlines.forEach(deadline => {
-           const monthIsExisting = monthsContainer.find(el_ => el_.month === deadline.date.getMonth());
+           const monthIsExisting =
+            monthsContainer.find(el_ =>
+              el_.month === deadline.date.getMonth()
+              && el_.year === deadline.date.getFullYear()
+            );
 
            if (monthIsExisting) {
              monthIsExisting.deadlines.push(deadline);
@@ -105,6 +122,7 @@ export class AppComponent implements OnInit {
            } else {
               monthsContainer.push({
                 month: deadline.date.getMonth(),
+                year: deadline.date.getFullYear(),
                 deadlines: [deadline]
               });
 

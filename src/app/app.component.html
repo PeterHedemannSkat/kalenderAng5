@@ -1,20 +1,39 @@
-<!--The content below is only a placeholder and can be replaced.-->
-  
-  <h1 class = "text-center">
-    Din virksomheds kommende frister
-  </h1>
 
-  <!--<app-deadline-object [deadlines] = "deadLineMainObs | async"></app-deadline-object>-->
-  <app-deadline-godt-for-start [data] = "godtFraStartObs | async"></app-deadline-godt-for-start>
-  <div class = "text-center">
+  <div [hidden] = "!visGodtFraStart">
+      <h1 class = "text-center">
+          Din virksomheds kommende frister
+        </h1>
       
-      <button (click) = "antalFrister = antalFrister + 3" type = "button" class = "as-anchor">
-        <span class = "badge">+</span>
-        Vis flere 
-      </button>   
+
+        <app-deadline-godt-for-start [data] = "godtFraStartObs | async"></app-deadline-godt-for-start>
+        <div class = "text-center">
+            
+            <button (click) = "antalFrister = antalFrister + 3" type = "button" class = "as-anchor">
+              <span class = "badge">+</span>
+              Vis flere 
+            </button>   
+        </div>
   </div>
- 
- 
+
+
+  <hr>
+  
+  <!--
+  <div class = "align-center">
+    <h2>skatdk kalender</h2>
+      
+    <app-skatdk-calender-list [data] = "deadLineMainObs | async"></app-skatdk-calender-list>
+      
+    <hr>
+  
+    <button class = "btn btn-small pull-left"><</button>
+    <button class = "btn btn-small pull-right">></button>
+    
+    
+  </div>
+  -->
+
+
 
 
   
