@@ -1,18 +1,26 @@
 export const iconMapping = [
     {
         id: 'moms',
-        srcName: 'ikon-moms--white'
+        srcName: 'ikon-moms'
     },
     {
         id: 'regnskab',
-        srcName: 'ikon-bogfoering--white'
+        srcName: 'ikon-bogfoering'
     },
     {
         id: 'ansatte',
-        srcName: 'ikon-kom-godt-fra-start--white'
+        srcName: 'ikon-godt-fra-start'
     },
     {
         id: 'forskud',
-        srcName: 'ikon-forskudsopgoerelse--white'
+        srcName: 'ikon-forskudsopgoerelse'
+    },
+    {
+        id: 'selvangive',
+        srcName: 'ikon-selvangivelse'
+    },
+    {
+        id: 'bogfoering',
+        srcName: 'ikon-bogfoering'
     }
 ];

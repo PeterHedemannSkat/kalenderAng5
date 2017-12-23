@@ -21,6 +21,12 @@ import { TransferToCalenderService } from './transferCalender/transferToCalender
 import { TransferToCalenderComponent } from './components/transfer-to-calender/transfer-to-calender.component';
 import { RegularDeadlineBoxComponent } from './components/regular-deadline-box/regular-deadline-box.component';
 import { SkatdkCalenderListComponent } from './components/skatdk-calender-list/skatdk-calender-list.component';
+import { KalenderIndstillingerComponent } from './components/kalender-indstillinger/kalender-indstillinger.component';
+import { AngularWebStorageModule } from 'angular-web-storage';
+import { StateFristTyperService } from './stateTyperFrister/statetypeFrister';
+import { InitViewComponent } from './components/init-view/init-view.component';
+import { JaNejComponent } from './sharedServices/ja-nej/ja-nej.component';
+import { DatovaelgerInputFeltComponent } from './sharedServices/datePicker/datovaelger-input-felt.component';
 
 
 @NgModule({
@@ -31,13 +37,18 @@ import { SkatdkCalenderListComponent } from './components/skatdk-calender-list/s
     DeadlineGodtForStartComponent,
     TransferToCalenderComponent,
     RegularDeadlineBoxComponent,
-    SkatdkCalenderListComponent
+    SkatdkCalenderListComponent,
+    KalenderIndstillingerComponent,
+    InitViewComponent,
+    JaNejComponent,
+    DatovaelgerInputFeltComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
-  //, InMemoryWebApiModule.forRoot( ExternalData )
+    HttpModule,
+    AngularWebStorageModule
+   , InMemoryWebApiModule.forRoot( ExternalData )
   ],
   providers: [
     CalenderServices,
@@ -48,7 +59,8 @@ import { SkatdkCalenderListComponent } from './components/skatdk-calender-list/s
     TxtSharedService,
     LaeringsPakkeService,
     UrlRessourceService,
-    TransferToCalenderService
+    TransferToCalenderService,
+    StateFristTyperService
   ],
   bootstrap: [AppComponent]
 })

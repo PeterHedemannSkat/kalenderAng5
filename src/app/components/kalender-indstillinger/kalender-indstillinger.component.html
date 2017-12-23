@@ -1,0 +1,15 @@
+<div class = "well indstillinger" style = "margin-top: 1em">
+  <div class = "center-section">
+      <div *ngFor="let fristGroup of _textMapper" class = "">
+          
+        <h4>{{_txtService.txt.get(fristGroup.id)}}</h4>
+      
+        <div *ngFor = "let frist of fristGroup.types">
+          <input type="checkbox" [id] = "frist" (click) = "_settingService.flipValue(frist)" [checked] = "setChecked(frist)">
+          <label [for] = "frist">{{_txtService.txt.get(frist)}}</label>
+        </div>
+      
+      </div>
+  </div>      
+</div>
+

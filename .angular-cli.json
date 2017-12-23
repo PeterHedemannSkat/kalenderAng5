@@ -20,9 +20,14 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+        "assets/skat.min.css",
+        "assets/yetAnother.css"
+
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/jquery.min.js",
+        "assets/calender.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

@@ -1,42 +1,42 @@
 export const iconNames = [
     {
         id: 'loonsum',
-        name: 'ikon-kom-godt-fra-start--white'
+        name: 'ikon-godt-fra-start'
     },
     {
         id: 'askat',
-        name: 'ikon-kom-godt-fra-start--white'
+        name: 'ikon-godt-fra-start'
     },
     {
         id: 'moms',
-        name: 'ikon-moms--white'
+        name: 'ikon-moms'
     },
     {
         id: 'EU_salg',
-        name: 'ikon-godt-fra-start--white'
+        name: 'ikon-godt-fra-start'
     },
     {
         id: 'momsRefusion',
-        name: 'ikon-moms--white'
+        name: 'ikon-moms'
     },
     {
         id: 'bSkatteRater',
-        name: 'ikon-forskudsopgoerelse--white'
+        name: 'ikon-forskudsopgoerelse'
     },
     {
         id: 'accontoSkat',
-        name: 'ikon-kom-godt-fra-start--white'
+        name: 'ikon-godt-fra-start'
     },
     {
         id: 'oneStopMoms',
-        name: 'ikon-moms--white'
+        name: 'ikon-moms'
     },
     {
         id: 'selvangivelse',
-        name: 'ikon-selvangivelse--white'
+        name: 'ikon-selvangivelse'
     },
     {
         id: 'punktafgifter',
-        name: 'ikon-kom-godt-fra-start--white'
+        name: 'ikon-godt-fra-start'
     }
 ];

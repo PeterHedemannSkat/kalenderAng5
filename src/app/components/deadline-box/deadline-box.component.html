@@ -21,15 +21,15 @@
                       <a [href] = "getUrlOfLaeringsPakke(laeringspakke)" target="_blank">
                         <button type = "button" class = "laeringspakke">
                             <img [src] = "srcOfIcon(laeringspakke)" class = "icon-small icon-inside-button">  
-                          Lær om {{getLaeringsPakkeNavn(laeringspakke)}}
+                          Få hjælp til {{getLaeringsPakkeNavn(laeringspakke)}}
                         </button>  
                     </a>
                   </span>       
               </div>
               <div>   
-                  <span class = "glyphicon glyphicon-calendar"></span>
+                  
                   <button type = "button" class = "as-anchor" (click) = "toogleCalenderTransferOpen = !toogleCalenderTransferOpen">
-                    Tilføj til kalender
+                    Tilføj til kalender <img class = "arrow" [src] = "getArrow()">
                   </button>
 
               </div>

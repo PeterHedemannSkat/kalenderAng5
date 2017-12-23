@@ -14,6 +14,10 @@ export const activeLaeringsPakker = [
     {
         id: 'moms',
         da: '+'
+    },
+    {
+        id: 'bogfoering',
+        da: '+'
     }
 
 ];

@@ -14,6 +14,8 @@ import { periodsMap } from './dataMapping/periodsPrYearOfFrister';
 import { rateTypes } from './dataMapping/fristerTypes';
 import { TxtSharedService } from './TxtSharedService/txtSharedService';
 import { PeriodEntity } from './periodClass/periodClass';
+import { StateFristTyperService } from './stateTyperFrister/statetypeFrister';
+import { setTimeout } from 'timers';
 
 export interface MonthHolder {
   month: number;
@@ -30,109 +32,80 @@ export class AppComponent implements OnInit {
   constructor (
     public _deadline: Deadline,
     public _abstract: DeadlinesFromDates,
-    public _txt: TxtSharedService
+    public _txt: TxtSharedService,
+    public _stateService: StateFristTyperService
 
   ) {}
 
   visGodtFraStart = true;
-  antalFrister_ = 3;
+  showindstillinger = false;
+  specialTimer = false;
+  magicWord = '';
 
-  get antalFrister() {
-    return this.antalFrister_;
+  initView() {
+    return (this._stateService.userSettings.isUntouched);
   }
 
-  set antalFrister(val: any) {
-    this.antalFrister_ = Number(val);
-    this.deadLineMainObs = this.getDeadlinesObs();
-    this.godtFraStartObs = this.monthDivisorStructure();
-  }
-
-  deadLineMainObs: Observable<DeadlineRequest>;
-  godtFraStartObs: Observable<MonthHolder[]>;
-
-  getAllTypes() {
-    return this._abstract.getAllTypes();
-  }
 
   ngOnInit() {
-    this.deadLineMainObs = this.getDeadlinesObs();
-    this.godtFraStartObs = this.monthDivisorStructure();
-
-
-    this._abstract.getSpecificNumberOfDeadlinesFromDate_(5, this.getAllTypes(), new Date(), 'to')
-      .subscribe(el => {
-        console.log(el);
-      });
-
-
+    this.setClickOutSideEvent();
+    this.clearCachEventSet();
   }
 
-  normalTypes() {
-    return ['moms_kvartal', 'bSkatteRater', 'selvangivelse'];
+  setClickOutSideEvent() {
+    window.addEventListener('click', (event: Event) => {
+
+      const
+        target                    = <HTMLElement> event.target,
+        clickInsideIndstillinger  = this.closests(target, 'indstillinger'),
+        clickOnToggleButton       = this.closests(target, 'indstillinger-toggle');
+
+      /* hvis man klikker uden for indstillinger og ikke på knappen der toggler indstillinger, så lukkes indstillinger */
+      if (!clickOnToggleButton && !clickInsideIndstillinger) {
+        this.showindstillinger = false;
+      }
+
+    });
   }
 
-  getDeadlinesObs(): Observable<DeadlineRequest> {
+  clearCachEventSet() {
+    window.addEventListener('keyup', (event: KeyboardEvent) => {
 
-    const
-      antalFrister = this.antalFrister_,
-      single = ['selvangivelse'],
-      types = this.normalTypes(),
-      date = new Date(),
-      direction = 'from';
+      /* 5 sec to write rens in order to clear cach */
+      if (event.key === 'r' && !this.specialTimer) {
 
-    return (antalFrister > 0)
-      ? this._abstract
-        .getSpecificNumberOfDeadlinesFromDate(antalFrister, types, date, direction)
-      : Observable.from([]);
+        this.specialTimer = true;
 
+        setTimeout(() => {
+          this.specialTimer = false;
+          this.magicWord = '';
+        }, 5000);
+
+      }
+
+      if (this.specialTimer) {
+        this.magicWord += event.key;
+
+        if (this.magicWord === 'rens') {
+          this._stateService._localService.remove(this._stateService.nameLocalStorage);
+          window.location.reload();
+        }
+      }
+
+    });
   }
 
-  /**
-   * State:
-   *    - seneste dato vist
-   *    - frister vist fra seneste fristdato
-   *    - ved ny fristdato => tjek om seneste frist dato er samme som gemte, hvis ja lægges nye viste frister 
-   *    - oven i denne, hvis nej overskrives prop med nye seneste dag, indeholdende frister
-   *    - frister visr fra tidligste (oppe) fristdato
-   *    - hvis alle ikke er vist for seneste dato, skal side 2 vise fra seneste dato, dog ikke dem er vist
-   *  tidligste dato => viste
-   *  seneste dato => viste --- hvis tidligste og seneste er ens?
-   */
+  closests (HTMLElement: HTMLElement, parentClass: string): any {
 
-  monthDivisorStructure() {
+    if (HTMLElement === null) {
+      return;
+    }
 
-    return this.getDeadlinesObs()
-      .map(el => {
-
-        const
-          body = el,
-          deadlines = body.deadlines,
-          monthsContainer: MonthHolder[] = [];
-
-        deadlines.forEach(deadline => {
-           const monthIsExisting =
-            monthsContainer.find(el_ =>
-              el_.month === deadline.date.getMonth()
-              && el_.year === deadline.date.getFullYear()
-            );
-
-           if (monthIsExisting) {
-             monthIsExisting.deadlines.push(deadline);
-
-           } else {
-              monthsContainer.push({
-                month: deadline.date.getMonth(),
-                year: deadline.date.getFullYear(),
-                deadlines: [deadline]
-              });
-
-           }
-
-        });
-
-        return monthsContainer;
-
-      });
+    return (HTMLElement && HTMLElement.classList.contains && HTMLElement.classList.contains(parentClass))
+        ? true
+        : (HTMLElement && (HTMLElement.tagName === 'BODY' || HTMLElement.tagName === 'HTML'))
+            ? false
+            : this.closests(HTMLElement.parentElement, parentClass);
 
   }
 

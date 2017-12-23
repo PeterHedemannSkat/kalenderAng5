@@ -10,6 +10,7 @@ export class UrlRessourceService {
 
     relativeMainUrl = 'websrv/jsong.ashx?Id=';
     skatdkOfIcons = 'style/images/marketing/godt-fra-start/';
+    includeClear = '&clear=1';
     pathLocal = 'assets/';
     linksPath = 'skat.aspx?oid=';
     absoluteSkatdkUrl = '//skat.dk';
@@ -17,7 +18,7 @@ export class UrlRessourceService {
     getDapOidOfId(id: string) {
 
         const oId = urlMapper.find(el => el.local === id).skatdk;
-        return `${this.relativeMainUrl}${oId}`;
+        return `${this.relativeMainUrl}${oId}${this.includeClear}`;
 
     }
 
@@ -35,7 +36,7 @@ export class UrlRessourceService {
             icon_ = iconNames.find(el => el.id === id),
             svgName = icon_ ? icon_.name : '';
 
-        return (environment.production) ? `${this.skatdkOfIcons}${svgName}.svg` : `${this.pathLocal}${svgName}.svg`;
+        return (environment.production) ? `${this.skatdkOfIcons}${svgName}--black.svg` : `${this.pathLocal}${svgName}--black.svg`;
 
     }
 
@@ -45,7 +46,7 @@ export class UrlRessourceService {
             icon_ = iconMapping.find(el => el.id === id),
             svgName = icon_ ? icon_.srcName : '';
 
-       return (environment.production) ? `${this.skatdkOfIcons}${svgName}.svg` : `${this.pathLocal}${svgName}.svg`;
+       return (environment.production) ? `${this.skatdkOfIcons}${svgName}--white.svg` : `${this.pathLocal}${svgName}--white.svg`;
 
     }
 

@@ -2,21 +2,45 @@
   <div [hidden] = "!visGodtFraStart">
       <h1 class = "text-center">
           Din virksomheds kommende frister
-        </h1>
+      </h1>
+
+      <ng-container *ngIf = "_stateService.userSettings.isUntouched === false">
+        <div class = "center-section kalender-indstillinger">
+            <button type = "button" (click) = "showindstillinger = !showindstillinger" class = "indstillinger-toggle">
+                <span>Tilpas kalenderen</span>
+                <span class = "indstillinger-icon"> </span>
+            </button>
+          </div>
+        
+          <app-kalender-indstillinger *ngIf="showindstillinger"></app-kalender-indstillinger>
+    
+          <ng-container *ngIf = "_stateService.userSettings.fristerShown.length > 0" >
+              <app-deadline-godt-for-start [number] = "_stateService.antalFrister" [data] = "_stateService.godtFraStartObs | async"></app-deadline-godt-for-start>
+              <div class = "text-center">
+                  
+                  <button (click) = "_stateService.antalFrister = _stateService.antalFrister + 3" type = "button" class = "as-anchor">
+                    <span class = "badge">+</span>
+                    Vis flere 
+                  </button>   
+              </div>
+          </ng-container>
+
+      </ng-container>
+      
+      <div *ngIf = "_stateService.userSettings.isUntouched === true">
+          <app-init-view></app-init-view>
+      </div>
+    
+    
+      
       
 
-        <app-deadline-godt-for-start [data] = "godtFraStartObs | async"></app-deadline-godt-for-start>
-        <div class = "text-center">
-            
-            <button (click) = "antalFrister = antalFrister + 3" type = "button" class = "as-anchor">
-              <span class = "badge">+</span>
-              Vis flere 
-            </button>   
-        </div>
+ 
+
   </div>
 
 
-  <hr>
+  
   
   <!--
   <div class = "align-center">

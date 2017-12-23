@@ -9,10 +9,14 @@ export const learingsPakkeUrls  = [
     },
     {
         id: 'regnskab',
-        skatdkOid: 0
+        skatdkOid: 4462
     },
     {
         id: 'forskud',
         skatdkOid: 4461
+    },
+    {
+        id: 'selvangive',
+        skatdkOid: 4466
     }
 ];

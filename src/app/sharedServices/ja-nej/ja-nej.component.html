@@ -1,0 +1,47 @@
+
+<div class="row form-group">
+
+    <div class = "col-sm-6 col-md-6"> 
+        {{label}}
+    </div>
+    
+    <div class = "col-sm-6 col-md-6"> 
+        
+        <div class = "pull-right">
+        <div class = "btn-group" data-toggle="buttons">
+            <label    
+                class = "btn skts-btn-radio" 
+                [class.active] = "value === true"
+                (click) = "valueChange.emit(true)"       
+            >
+                <input 
+                    #radiohtml
+                    type="radio"    
+                    [attr.name] = "name" 
+                    [checked] = "value === true"
+                >
+                {{getTxt().jaTxt}}
+            </label>
+            <label 
+                
+                class = "btn skts-btn-radio" 
+                [class.active] = "value === false"
+                (click) = "valueChange.emit(false)" 
+            >
+                <input 
+                    #radiohtml
+                    type="radio" 
+                    [attr.name] = "name" 
+                    [checked] = "value === false"
+                >
+                {{getTxt().nejTxt}}
+            </label>
+        </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+

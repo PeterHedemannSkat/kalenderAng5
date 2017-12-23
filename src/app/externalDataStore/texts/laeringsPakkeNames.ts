@@ -22,5 +22,9 @@ export const laeringsPakke = [
     {
         id: 'regnskab',
         da: 'regnskab'
+    },
+    {
+        id: 'bogfoering',
+        da: 'bogføring'
     }
 ];

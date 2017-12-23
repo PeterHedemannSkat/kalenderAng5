@@ -1,0 +1,24 @@
+.main-content {
+    margin:0 auto;
+    max-width: 160px;
+}
+
+.table-cell {
+    display: table-cell;
+}
+
+.min-width {
+    width:25%;
+    vertical-align: bottom;
+}
+
+.label {
+    padding-right: 1em;
+    width:75%;
+}
+
+.table-row {
+    width: 100%;
+    display: table;
+    padding: 0.5em 0;
+}

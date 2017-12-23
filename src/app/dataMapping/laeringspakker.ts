@@ -10,11 +10,6 @@ export const laeringspakker = [
         laeringsPakkeIds: ['ansatte']
     },
     {
-        groups: ['EU_salg'],
-        ids: [],
-        laeringsPakkeIds: ['eksport']
-    },
-    {
         groups: ['bSkatteRater'],
         ids: [],
         laeringsPakkeIds: ['forskud']
@@ -22,6 +17,11 @@ export const laeringspakker = [
     {
         groups: ['moms'],
         ids: [],
-        laeringsPakkeIds: ['regnskab', 'moms']
-    }
+        laeringsPakkeIds: ['bogfoering', 'moms']
+    },
+    {
+        groups: ['selvangive'],
+        ids: [],
+        laeringsPakkeIds: ['selvangive']
+    },
 ];

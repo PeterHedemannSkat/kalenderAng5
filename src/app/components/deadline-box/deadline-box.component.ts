@@ -51,6 +51,16 @@ export class DeadlineBoxComponent implements OnInit  {
 
   }
 
+  getArrow() {
+
+    const
+      collapsedUrl = 'style/images/collapsed.svg',
+      expandedUrl = 'style/images/expanded.svg';
+
+      return this.toogleCalenderTransferOpen ? expandedUrl : collapsedUrl;
+
+  }
+
   srcOfIcon(id: string) {
     return this._UrlRessourceService.getGodtFraStartIconUrlOfLeaeringsPakke(id);
 

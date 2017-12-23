@@ -62,3 +62,33 @@ button.as-anchor {
     max-width: 45em;
     margin: 0 auto;
 }
+
+app-kalender-indstillinger label {
+    font-weight: normal;
+}
+
+app-root .indstillinger-icon:after {
+    content: '\e940';
+    font-family: 'dap-ikon-font';
+    font-size: 1.5rem;
+    color: black;
+    text-align: center;
+}
+
+.center-section {
+    text-align: center;
+}
+
+.indstillinger-boxed {
+
+    max-width: 20em;
+}
+
+.center-section h4 {
+    padding: 0.5em;
+    border-bottom: 1px dotted gray;
+}
+
+.init-pligter label {
+    display: inline;
+}
