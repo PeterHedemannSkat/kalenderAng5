@@ -27,6 +27,7 @@ import { StateFristTyperService } from './stateTyperFrister/statetypeFrister';
 import { InitViewComponent } from './components/init-view/init-view.component';
 import { JaNejComponent } from './sharedServices/ja-nej/ja-nej.component';
 import { DatovaelgerInputFeltComponent } from './sharedServices/datePicker/datovaelger-input-felt.component';
+import { FirstLetterToCapitalPipe } from './pipes/firstCapitalLetter';
 
 
 @NgModule({
@@ -41,14 +42,15 @@ import { DatovaelgerInputFeltComponent } from './sharedServices/datePicker/datov
     KalenderIndstillingerComponent,
     InitViewComponent,
     JaNejComponent,
-    DatovaelgerInputFeltComponent
+    DatovaelgerInputFeltComponent,
+    FirstLetterToCapitalPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     AngularWebStorageModule
-   , InMemoryWebApiModule.forRoot( ExternalData )
+   //, InMemoryWebApiModule.forRoot( ExternalData )
   ],
   providers: [
     CalenderServices,

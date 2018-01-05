@@ -261,6 +261,28 @@ export class DeadlinesFromDates {
 
     }
 
+    public firstDayAfterPeriod(period: Period) {
+
+        const
+            periodNr = period.period,
+            numberOfPeriods = periodsMap.find(el => el.deadLineIDs.indexOf(period.id) > -1).periods,
+            lengthOfPeriod = 12 / numberOfPeriods,
+            month_ = periodNr * lengthOfPeriod;
+
+        let month, year;
+
+        if (month_ === 12) {
+            month = 0;
+            year = period.year + 1;
+        } else {
+            month = month_;
+            year = period.year;
+        }
+
+        return new Date(year, month, 1);
+
+    }
+
     private periodsOfDeadlineType (id: string) {
         return periodsMap.find(el => el.deadLineIDs.indexOf(id) > -1).periods;
     }

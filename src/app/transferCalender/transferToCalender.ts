@@ -43,8 +43,8 @@ export class TransferToCalenderService {
                   'DTSTART:' + (val.from || ''),
                   'DTEND:' + (val.to || ''),
                   'SUMMARY:' + (val.txt || ''),
-                  'DESCRIPTION:test',
-                  'LOCATION:test',
+                  'DESCRIPTION:',
+                  'LOCATION:',
                   'END:VEVENT',
                   'END:VCALENDAR'].join('\n'));
 

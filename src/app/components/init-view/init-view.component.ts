@@ -71,8 +71,12 @@ export class InitViewComponent implements OnInit {
 
   allTypes() {
     return this.allVal.reduce((state, cur) => {
-      return state.concat(cur.types);
-    }, []);
+      if (cur.id !== 'accontoSkat') {
+        return state.concat(cur.types);
+      } else {
+        return state;
+      }
+    }, []).filter(el => el !== 'moms_halvaar');
   }
 
   toggleVis() {
@@ -96,6 +100,15 @@ export class InitViewComponent implements OnInit {
     return this._state.userSettings.fristerShown.findIndex(el => el === id) > -1;
   }
 
+  getArrow() {
+
+    const
+      collapsedUrl = 'style/images/collapsed.svg',
+      expandedUrl = 'style/images/expanded.svg';
+
+    return this.showalltypes ? expandedUrl : collapsedUrl;
+
+  }
 
 
 

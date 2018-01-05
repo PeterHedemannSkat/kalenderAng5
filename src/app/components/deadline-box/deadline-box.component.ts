@@ -13,6 +13,8 @@ import { iconMapping } from '../../dataMapping/iconUrlMap';
 import { iconNames } from '../../dataMapping/iconOfMainDeadLines';
 import { UrlRessourceService } from '../../urlRessource/urlressource';
 import { PrintDeadlinesService } from '../../printDeadlines/printDeadlines';
+import { LogOnMapper } from '../../dataMapping/logOnMapper';
+import { DeadlinesFromDates } from '../../getDeadlinesFromDates/DeadlinesFromDates';
 
 
 @Component({
@@ -21,6 +23,8 @@ import { PrintDeadlinesService } from '../../printDeadlines/printDeadlines';
   providers: [PrintDeadlinesService]
 })
 export class DeadlineBoxComponent implements OnInit  {
+
+  logonMap = LogOnMapper;
 
   txt: GetText = new GetText();
   toogleCalenderTransferOpen = false;
@@ -32,12 +36,48 @@ export class DeadlineBoxComponent implements OnInit  {
     public _txtService: TxtSharedService,
     public _laeringspakker: LaeringsPakkeService,
     public _UrlRessourceService: UrlRessourceService,
-    public _txtDeadline: PrintDeadlinesService
+    public _txtDeadline: PrintDeadlinesService,
+    public _deadline: DeadlinesFromDates
 
 ) {}
 
   ngOnInit() {
 
+  }
+
+  showBotton() {
+
+    const maintype = textMapper.find(el => el.types.indexOf(this.deadline.period.id) > -1).id;
+    const _frist = this.logonMap.find(el => el.id === maintype);
+
+    if (_frist.button) {
+
+      const
+        now = new Date().getTime();
+
+      /* er værdi -1 bruges den korrekte log på periode - ved selvangivelse bruges X før frist */
+
+      const firstDayAfterPeriod = _frist.openBeforeDeadline === -1
+        ? this._deadline.firstDayAfterPeriod(this.deadline.period).getTime()
+        : (this.deadline.date.getTime() - (_frist.openBeforeDeadline * 24 * 60 * 60 * 1000));
+
+      /* er tiden senere end første dag efter periodens afslutning kan man rette */
+      return now > firstDayAfterPeriod;
+
+    } else {
+
+      return _frist.button;
+
+    }
+
+
+  }
+
+  urlOfButton() {
+    const maintype = textMapper.find(el => el.types.indexOf(this.deadline.period.id) > -1).id;
+    const _frist = this.logonMap.find(el => el.id === maintype);
+
+    return _frist.url;
   }
 
   srcGroupIcon() {

@@ -18,7 +18,7 @@
               <app-deadline-godt-for-start [number] = "_stateService.antalFrister" [data] = "_stateService.godtFraStartObs | async"></app-deadline-godt-for-start>
               <div class = "text-center">
                   
-                  <button (click) = "_stateService.antalFrister = _stateService.antalFrister + 3" type = "button" class = "as-anchor">
+                  <button (click) = "_stateService.antalFrister = _stateService.antalFrister + 3" type = "button" class = "as-anchor add-frister">
                     <span class = "badge">+</span>
                     Vis flere 
                   </button>   
@@ -30,18 +30,10 @@
       <div *ngIf = "_stateService.userSettings.isUntouched === true">
           <app-init-view></app-init-view>
       </div>
-    
-    
-      
-      
-
- 
 
   </div>
 
 
-  
-  
   <!--
   <div class = "align-center">
     <h2>skatdk kalender</h2>

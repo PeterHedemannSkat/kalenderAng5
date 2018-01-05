@@ -5,7 +5,7 @@
           
           <div class="period-print">
             <img [src] = "srcGroupIcon()" class = "icon-small icon-inside-button">
-            <span class="main-category"> {{printMainLabel()}} </span>
+            <span class="main-category"> {{printMainLabel() | FirstLetterToCapital}}</span>
             {{printPeriod()}} 
           </div> 
             
@@ -18,13 +18,18 @@
           <div class = "deadline-options">
               <div>     
                   <span *ngFor = "let laeringspakke of getLaeringsPakker()" >       
-                      <a [href] = "getUrlOfLaeringsPakke(laeringspakke)" target="_blank">
-                        <button type = "button" class = "laeringspakke">
-                            <img [src] = "srcOfIcon(laeringspakke)" class = "icon-small icon-inside-button">  
+                      <a [href] = "getUrlOfLaeringsPakke(laeringspakke)" target="_blank" class = "laeringspakke">
+                        
+                          <img [src] = "srcOfIcon(laeringspakke)" class = "icon-small icon-inside-button">  
                           Få hjælp til {{getLaeringsPakkeNavn(laeringspakke)}}
-                        </button>  
+                         
                     </a>
                   </span>       
+              </div>
+              <div class = "log-on-frist" *ngIf = "showBotton()">
+                <a [href] = "urlOfButton()" class = "dap-aktionslink-skatdk btn-log-paa">
+                  log på
+                </a>
               </div>
               <div>   
                   

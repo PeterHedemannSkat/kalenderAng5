@@ -19,13 +19,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-        "assets/skat.min.css",
         "assets/yetAnother.css"
-
       ],
       "scripts": [
-        "assets/jquery.min.js",
         "assets/calender.js"
       ],
       "environmentSource": "environments/environment.ts",

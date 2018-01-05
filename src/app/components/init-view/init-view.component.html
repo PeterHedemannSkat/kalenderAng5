@@ -2,48 +2,56 @@
 
   <div class = "row">
     <div class = "col-md-6 col-md-offset-3">
-      <p>
-          {{_txt.txt.get('introNewVirksomhed')}}
-      </p> 
+      <div class = "skts-init-calender-wrapper">
+          <p>
+              {{_txt.txt.get('introNewVirksomhed')}}
+          </p> 
+    
+          <hr>
+    
+          <!--
+          <app-ja-nej
+          [(value)] = "momsregistreret"
+          label = "Er din virksomhed momsregistreret, dvs. forventer du en omsætning over 50.000 kr."
+          ></app-ja-nej>
+          -->
+    
+          <app-skat-datovaelger-input-felt
+            [(model)] = "date"
+            [label] = "_txt.txt.get('labelDato')"
+            feltId = "test"
+          >
+          </app-skat-datovaelger-input-felt>
+    
+          <hr>
+    
+          <p>{{_txt.txt.get('infoToUser')}}</p>
+          <!--
+          <h3> 
+            {{_txt.txt.get('typicalDeadlines')}}  
+          </h3>
+          -->
+    
+          <div *ngFor = "let pligt of  getFristtypes(); let i = index" class = "init-pligter">
+              <input type = "checkbox" [id] = "pligt" (click) = "_state.flipValue(pligt)" [checked] = "setChecked(pligt)"> 
+              <label [for] = "pligt">{{_txt.txt.get(getHeader(pligt)) | FirstLetterToCapital}}  - {{_txt.txt.get(pligt)}}</label>
+          </div>
 
-      <hr>
-
-      <!--
-      <app-ja-nej
-      [(value)] = "momsregistreret"
-      label = "Er din virksomhed momsregistreret, dvs. forventer du en omsætning over 50.000 kr."
-      ></app-ja-nej>
-      -->
-
-      <app-skat-datovaelger-input-felt
-        [(model)] = "date"
-        label = "Dato virksomhed starter"
-        feltId = "test"
-      >
-      </app-skat-datovaelger-input-felt>
-
-      <br>
-
-      <h3> {{_txt.txt.get('typicalDeadlines')}}
-        <button type = "button" (click) = "showalltypes = !showalltypes" class = "small-button">{{toggleVis()}}</button>
-      </h3>
-
-      <div *ngFor = "let pligt of  getFristtypes(); let i = index" class = "init-pligter">
-          <input type = "checkbox" [id] = "pligt" (click) = "_state.flipValue(pligt)" [checked] = "setChecked(pligt)"> 
-          <label [for] = "pligt">{{_txt.txt.get(getHeader(pligt))}} - {{_txt.txt.get(pligt)}}</label>
+          <button type = "button" (click) = "showalltypes = !showalltypes" class = "as-anchor show-frister">{{toggleVis()}} <img class = "arrow" [src] = "getArrow()"></button>
+    
+         
+    
+          
+    
+    
+    
+    
+          <hr>
+        
+          <button type = "button" class = "btn btn-primary" (click) = "update()">ok</button>
+        </div>
       </div>
 
-     
-
-      
-
-
-
-
-      <hr>
-    
-      <button type = "button" class = "btn btn-primary" (click) = "update()">ok</button>
-    </div>
 
   </div>
 

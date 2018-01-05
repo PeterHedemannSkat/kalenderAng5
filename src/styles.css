@@ -92,3 +92,28 @@ app-root .indstillinger-icon:after {
 .init-pligter label {
     display: inline;
 }
+
+h3.heading-frister {
+    margin-top: 1em;
+}
+
+.pull-some-right {
+    padding-left: 1em;
+}
+
+a.dap-aktionslink-skatdk {
+    background: #FFC61E;
+    color: #000;
+}
+
+
+a.dap-aktionslink {
+    background-color: #395F77;
+    display: block;
+    padding: 2.3rem 6.3rem;
+    color: #FFF;
+    text-decoration: none;
+    margin: 1rem 0 0;
+    text-align: center;
+    transition: all .3s;
+}
