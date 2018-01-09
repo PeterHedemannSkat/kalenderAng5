@@ -3,6 +3,7 @@ import { DeadlineUnit } from '../../getDeadlinesFromDates/deadlineUnit';
 import { TransferToCalenderService } from '../../transferCalender/transferToCalender';
 import { TxtSharedService } from '../../TxtSharedService/txtSharedService';
 import { DomSanitizer } from '@angular/platform-browser';
+import * as detect from 'detect-browser';
 
 
 @Component({
@@ -22,6 +23,15 @@ export class TransferToCalenderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    const browser_ = detect.detect();
+
+  }
+
+  isIE() {
+    const browser_ = detect.detect();
+    return browser_.name === 'ie';
+
   }
 
   sanitize(url: string) {

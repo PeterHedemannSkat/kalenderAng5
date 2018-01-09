@@ -18,7 +18,7 @@
           <div class = "deadline-options">
               <div>     
                   <span *ngFor = "let laeringspakke of getLaeringsPakker()" >       
-                      <a [href] = "getUrlOfLaeringsPakke(laeringspakke)" target="_blank" class = "laeringspakke">
+                      <a [href] = "getUrlOfLaeringsPakke(laeringspakke)" class = "laeringspakke">
                         
                           <img [src] = "srcOfIcon(laeringspakke)" class = "icon-small icon-inside-button">  
                           Få hjælp til {{getLaeringsPakkeNavn(laeringspakke)}}
@@ -27,8 +27,8 @@
                   </span>       
               </div>
               <div class = "log-on-frist" *ngIf = "showBotton()">
-                <a [href] = "urlOfButton()" class = "dap-aktionslink-skatdk btn-log-paa">
-                  log på
+                <a [href] = "urlOfButton()" class = "dap-aktionslink-skatdk btn-log-paa" target = "_blank">
+                  Log på
                 </a>
               </div>
               <div>   

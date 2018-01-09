@@ -22,6 +22,8 @@
             feltId = "test"
           >
           </app-skat-datovaelger-input-felt>
+
+       
     
           <hr>
     
@@ -38,17 +40,16 @@
           </div>
 
           <button type = "button" (click) = "showalltypes = !showalltypes" class = "as-anchor show-frister">{{toggleVis()}} <img class = "arrow" [src] = "getArrow()"></button>
-    
-         
-    
-          
-    
-    
-    
-    
+
           <hr>
-        
-          <button type = "button" class = "btn btn-primary" (click) = "update()">ok</button>
+          <div class = "text-center indstillinger-close">
+            <button type = "button" class = "btn btn-primary" (click) = "update()" [disabled] = "!date">
+                {{_txt.txt.get('visKalenderKnap')}}
+            </button>
+  
+            <p class = "cookie-info">{{_txt.txt.get('infoOmCookie')}}</p>
+          </div>
+
         </div>
       </div>
 

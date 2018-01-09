@@ -2,7 +2,7 @@
   <!--<img src = "assets/test3.svg" alt = "" class = "very-small-icon">-->
   <a [href] = "getGoogleUrl()" target="_blank">{{_txt.txt.get('addGoogle')}}</a>
 </div>
-<div class = "link-calender">
+<div [hidden] = "isIE()" class = "link-calender">
   <!--<img src = "assets/test3.svg" alt = "" class = "very-small-icon">-->
   <a [href] = "getIcs()" target="_blank">{{_txt.txt.get('addICS')}}</a>
 </div>

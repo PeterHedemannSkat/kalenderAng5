@@ -42,6 +42,14 @@ export const normalNames = [
     {
         id: 'skjul',
         da: 'skjul'
+    },
+    {
+        id: 'infoOmCookie',
+        da: 'dine valg bliver glemt i cookies'
+    },
+    {
+        id: 'visKalenderKnap',
+        da: 'Vis'
     }
 
 

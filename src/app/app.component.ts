@@ -58,10 +58,11 @@ export class AppComponent implements OnInit {
       const
         target                    = <HTMLElement> event.target,
         clickInsideIndstillinger  = this.closests(target, 'indstillinger'),
-        clickOnToggleButton       = this.closests(target, 'indstillinger-toggle');
+        clickOnToggleButton       = this.closests(target, 'indstillinger-toggle'),
+        indstillingerClose        = this.closests(target, 'indstillinger-close');
 
       /* hvis man klikker uden for indstillinger og ikke på knappen der toggler indstillinger, så lukkes indstillinger */
-      if (!clickOnToggleButton && !clickInsideIndstillinger) {
+      if (indstillingerClose || (!clickOnToggleButton && !clickInsideIndstillinger)) {
         this.showindstillinger = false;
       }
 

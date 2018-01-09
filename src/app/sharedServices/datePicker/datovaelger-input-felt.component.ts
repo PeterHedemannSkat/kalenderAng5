@@ -20,7 +20,7 @@ export class DatovaelgerInputFeltComponent implements AfterViewInit, OnInit, Aft
     datePickerSlut: string;
 
     dato: Date;
-    _modelStr: string;
+    _modelStr = '';
     get modelStr() {
         return this._modelStr;
     }
@@ -28,6 +28,7 @@ export class DatovaelgerInputFeltComponent implements AfterViewInit, OnInit, Aft
     set modelStr(value: string) {
         this._modelStr = value;
         this.model = datePickerController.getSelectedDate(this.feltNavn);
+        
 
     }
 
@@ -47,7 +48,6 @@ export class DatovaelgerInputFeltComponent implements AfterViewInit, OnInit, Aft
 
     set model(input: Date) {
         this.dato = input;
-
         this.modelChange.emit(input);
 
     }
@@ -85,6 +85,7 @@ export class DatovaelgerInputFeltComponent implements AfterViewInit, OnInit, Aft
         obj.formElements[this.feltNavn] = '%d/%m/%Y';
         obj.callbackFunctions = {
             dateset: [() => {
+                console.log('datepicker called writting to this.modelstr');
                 this.modelStr = element.val();
             }]
         };

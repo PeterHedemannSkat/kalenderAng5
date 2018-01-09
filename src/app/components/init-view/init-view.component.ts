@@ -23,10 +23,12 @@ export class InitViewComponent implements OnInit {
 
 
   get date() {
+
     return this._date;
   }
 
   set date(date: Date) {
+
 
     if (date) {
       this._date = date;

@@ -1,4 +1,5 @@
 <div class = "well indstillinger" style = "margin-top: 1em">
+  <p>{{_txtService.txt.get('infoToUser')}}</p>
   <!--
   <div class = "center-section">
       <div *ngFor="let fristGroup of _textMapper" class = "">
@@ -25,6 +26,16 @@
           </div>
       </div>
     </div>
+  
+
+    <div class = "text-center indstillinger-close">
+        <button type = "button" class = "btn btn-primary">
+            {{_txtService.txt.get('visKalenderKnap')}}
+        </button>
+    
+        <p class = "cookie-info">{{_txtService.txt.get('infoOmCookie')}}</p>
+    </div>
+
 
 
 </div>
