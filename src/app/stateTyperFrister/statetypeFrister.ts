@@ -107,14 +107,12 @@ export class StateFristTyperService {
 
         return (antalFrister > 0)
             ? this._abstract
-            .getSpecificNumberOfDeadlinesFromDate(antalFrister, types, date, direction)
+            .getSpecificNumberOfDeadlinesFromDate(antalFrister, types, date, direction, new Date(this.userSettings.firmStartDate))
             : Observable.from([]);
 
     }
 
     monthDivisorStructure() {
-
-        console.log(typeof this.userSettings);
 
         return (this.antalFrister_ > 0 && this.userSettings && this.userSettings.fristerShown.length > 0)
             ? this.getDeadlinesObs()

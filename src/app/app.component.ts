@@ -50,6 +50,27 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.setClickOutSideEvent();
     this.clearCachEventSet();
+
+    const now = new Date();
+
+    const firm = new Date(2018, 3, 1);
+
+    /*
+
+    this._abstract.getCorrectPeriod(3, ['selvangivelse'], now, 'from', firm).subscribe(el => {
+      console.log(el);
+    });
+
+
+    */
+
+    
+    this._abstract.getNextRateDeadlineOfGivenDate('bSkatteRater', new Date(2018, 7, 10)).subscribe(el => {
+      console.log(el);
+    });
+  
+
+
   }
 
   setClickOutSideEvent() {

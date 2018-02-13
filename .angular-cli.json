@@ -24,6 +24,7 @@
         "assets/skat.min.css"
       ],
       "scripts": [
+        "assets/jquery.min.js",
         "assets/calender.js"
       ],
       "environmentSource": "environments/environment.ts",

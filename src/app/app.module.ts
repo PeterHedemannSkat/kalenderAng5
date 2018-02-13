@@ -50,7 +50,7 @@ import { FirstLetterToCapitalPipe } from './pipes/firstCapitalLetter';
     FormsModule,
     HttpModule,
     AngularWebStorageModule
-   //, InMemoryWebApiModule.forRoot( ExternalData )
+   , InMemoryWebApiModule.forRoot( ExternalData )
   ],
   providers: [
     CalenderServices,

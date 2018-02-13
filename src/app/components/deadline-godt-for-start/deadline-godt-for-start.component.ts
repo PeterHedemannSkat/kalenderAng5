@@ -173,7 +173,7 @@ export class DeadlineGodtForStartComponent implements OnInit, OnChanges {
   printMonth(id: number) {
 
     const allmonths_ = this._txt.txt.getGroup('monthNames');
-    return allmonths_.find(el => el.id === id.toString()).txt;
+    return allmonths_.length > 0 ? allmonths_.find(el => el.id === id.toString()).txt : '';
   }
 
 

@@ -11,12 +11,15 @@ import { ManualDeadLines } from '../externalDataStore/dataStore';
 import { periodsMap } from '../dataMapping/periodsPrYearOfFrister';
 import { rateTypes } from '../dataMapping/fristerTypes';
 import { TxtDap } from '../textServices/textInterface';
+import { ConnectableObservable } from 'rxjs/observable/ConnectableObservable';
 
 
 @Injectable()
 export class Deadline {
 
-    service: Observable<TxtDap[]>;
+    // ConnectableObservable Observable
+
+    service: ConnectableObservable<TxtDap[]>;
 
     constructor(
         public _calender: CalenderServices,
@@ -35,8 +38,45 @@ export class Deadline {
                 // const a = environment.production ? el_[0].children : el_;
                 return el_ as TxtDap[];
             })
-            .share();
+            .publishReplay();
+        
+        this.service.connect();
+
+
+
+
+
     }
+
+    public __getDeadLine__ (period_: Period) {
+
+        return this.service
+            .map(deadLines => {
+                /**
+                 * Vi tjekker først om vi finder en manual datoopsætning, som skal
+                 * override den automatiske beregnet.
+                 * Normalt router vi direkte videre til getDeadLine_, som finder den automatisk beregnet frist.
+                 */
+
+                const manualExceptionDate = deadLines.find(el_ => {
+
+                    const
+                        _period_ = el_.en.split('-'),
+                        period = Number(_period_[1]),
+                        year = Number(_period_[0]),
+                        rateCheck = (period_.rate > 0) ? (Number(_period_[2]) === period_.rate) : true;
+
+                    return el_.id === period_.id && period === period_.period && period_.year === year && rateCheck;
+                });
+
+                return (manualExceptionDate)
+                    ? {date: this.parseDate(manualExceptionDate.da), period: period_}
+                    : {date: this.getDeadLine_(period_), period: period_};
+
+            });
+
+    }
+
 
     public getDeadLine (period_: Period) {
 
@@ -85,7 +125,7 @@ export class Deadline {
     }
 
 
-    private getDeadLine_(period_: Period) {
+    public getDeadLine_(period_: Period) {
 
         const
             isNonRateType = rateTypes.indexOf(period_.id) === -1,

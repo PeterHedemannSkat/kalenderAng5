@@ -33,5 +33,3 @@ export const deadlinesManual = [
         da: '10-2-2018'
     }
 ];
-
-

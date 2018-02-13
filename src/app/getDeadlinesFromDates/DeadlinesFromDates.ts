@@ -9,6 +9,8 @@ import { DeadlineUnit, EdgeDate, DeadlineRequest } from './deadlineUnit';
 import { periodsMap } from '../dataMapping/periodsPrYearOfFrister';
 import { rateTypes } from '../dataMapping/fristerTypes';
 import { CalenderServices } from '../sharedServices/dateServices';
+import { StateFristTyperService } from '../stateTyperFrister/statetypeFrister';
+import * as _ from 'lodash';
 
 
 @Injectable()
@@ -19,10 +21,10 @@ export class DeadlinesFromDates {
         public _dateService: CalenderServices
     ) {}
 
-    public getSpecificNumberOfDeadlinesFromDate(numbers: number, types: string[], date: Date, direction: string) {
+    public getSpecificNumberOfDeadlinesFromDate(numbers: number, types: string[], date: Date, direction: string, firmStartDate: Date) {
 
         return this
-            .getSpecificNumberOfDeadlinesFromDate_(numbers, types, date, direction)
+            .getSpecificNumberOfDeadlinesFromDate_(numbers, types, date, direction, firmStartDate)
             .map(el => {
 
                 const
@@ -52,11 +54,119 @@ export class DeadlinesFromDates {
     /**
      * Finder X antal frister for hver given type for alle input-typer før/efter en given dato.
      */
-    public getSpecificNumberOfDeadlinesFromDate_(numbers: number, types: string[], date: Date, direction: string) {
+    public getSpecificNumberOfDeadlinesFromDate_(numbers: number, types: string[], date: Date, direction: string, firmStartDate: Date) {
+    /**
+     * Pias rettelse: ikke fra dato med dato-i-periodens-næste-frist
+     */
+        const allObs = this.getFromDate(numbers, types, date, direction);
 
-        const allObs = types
+        const alt = this.getCorrectPeriod(numbers, types, date, direction, firmStartDate);
+
+        /**
+         * Observable.merge(...allObs)
+            .flatMap(el => el)
+         */
+
+        return alt
+            .toArray()
             .map(el => {
-                return this.getBorderDeadline(el, date, direction)
+
+
+                return el.sort((a, b) => {
+                    if (a.date < b.date) {
+                        return -1;
+                    } else if (a.date === b.date) {
+                        return 0;
+                    } else if (a.date > b.date) {
+                        return 1;
+                    }
+                });
+            });
+
+
+    }
+
+
+    getCorrectPeriod(numbers: number, types: string[], date: Date, direction: string, firmStartDate: Date) {
+
+        const
+            virkStartDate = firmStartDate,
+            today = this._dateService.now,
+            addADay = (1000 * 60 * 60 * 24);
+
+        const b: Observable<{date, period}>[] = types
+            .map(el => {
+                /**
+                 * Finder fristdato i den periode virksomheden starter, dvs.
+                 * først kommmende frist for virksomhed (FKF)
+                 */
+
+                const period = this.getPeriodOfDate(el, virkStartDate);
+
+                if (rateTypes.indexOf(el) > -1) {
+
+                    const obs = this.getNextRateDeadlineOfGivenDate(period.id, date)
+
+                    return obs;
+                }
+
+                return this._deadline.__getDeadLine__(period);
+            });
+
+
+        const t = Observable.merge(... b)
+            .map(el => {
+                /** Fra hvilken dato vil vi finde frister? =>
+                 * afhænger af FKF
+                 * hvis vi er langt efter virksomhedens startdato skal vi naturligvis ikke vise disse frister
+                 * med udgangspunkt i den første periode, men fra DD.
+                 * = Hvis DD er senere end FKF, vil vi vise frister fra DD og ikke Først kommende frist
+                 * = hvis FKF er senere end DD, vil vi vise frister fra FKF
+                 */
+
+                 console.log(el);
+
+                return today.getTime() > el.date.getTime() ? {date: today, period: el.period} : el;
+                // return firstDayBeforeFrist.getTime() > today.getTime() ? firstDayBeforeFrist : today;
+
+            })
+
+            .map(el => {
+
+                const
+                  currentPeriod = el.period,
+                  mapper: Period[] = [],
+                  id = currentPeriod.id,
+                  periodNumbers = periodsMap.find(el_ => el_.deadLineIDs.indexOf(id) > -1).periods,
+                  isRateType = rateTypes.find(el_ => id === el_),
+                  rates = isRateType ? RateMaster.find(el_ => el_.id.indexOf(id) > -1).baseDate.monthsAfterBase.length : null;
+
+                const
+                  periodStart_ = new PeriodEntity(currentPeriod, periodNumbers, rates),
+                  periodEnd_ = periodStart_.movePeriod(numbers - 1),
+                  periodStart = periodStart_.period,
+                  periodEnd = periodEnd_.period;
+
+                  return this.getDeadlinesFromPeriods(periodStart, periodEnd, id);
+
+            })
+
+            .flatMap(el => el);
+
+
+
+        return t;
+
+
+    }
+
+
+    public getFromDate(numbers: number, types: string[], date_: Date, direction: string) {
+
+        return  types
+            .map(el => {
+
+                return this.getBorderDeadline(el, date_, direction)
                     .map(deadline => {
 
                         const
@@ -73,27 +183,14 @@ export class DeadlinesFromDates {
                             periodStart = periodStart_.period,
                             periodEnd = periodEnd_.period;
 
+
+
                         return this.getDeadlinesFromPeriods(periodStart, periodEnd, id);
 
                     });
+
             });
 
-        return Observable
-            .merge( ...allObs)
-            .flatMap(el => el)
-            .toArray()
-            .map(el => {
-
-                return el.sort((a, b) => {
-                    if (a.date < b.date) {
-                        return -1;
-                    } else if (a.date === b.date) {
-                        return 0;
-                    } else if (a.date > b.date) {
-                        return 1;
-                    }
-                });
-            });
 
     }
 
@@ -258,6 +355,79 @@ export class DeadlinesFromDates {
             period = Math.ceil(month / lengthOfPeriod );
 
         return {id: id, period: period, year: year};
+
+    }
+
+    getNextRateDeadlineOfGivenDate(id: string, date: Date): Observable<{date, period}> {
+
+        const
+            rate_ = rateTypes.find(el => el === id),
+            period = this.getPeriodOfDate(id, date),
+            exactTimeofDate = date.getTime();
+
+        if (!!rate_) {
+
+            const
+                rate_info = RateMaster.find(el => el.id.indexOf(id) > -1),
+                obsArray: Observable<{date, period}>[] = [],
+                numberofRate = rate_info.baseDate.monthsAfterBase.length;
+
+            for (let i = 0; i < numberofRate; i++) {
+
+                const newPeriod = Object.assign({}, period);
+                newPeriod.rate = i + 1;
+                obsArray[i] = this._deadline.__getDeadLine__(newPeriod);
+
+            }
+
+            return Observable.forkJoin(... obsArray)
+                .switchMap(el => {
+
+                    const
+                        year = el[0].date.getFullYear(),
+                        first = new Date(year - 1, 11, 31, 23, 0);
+
+                    const only = el.map(el_ => el_.date);
+
+                    only.unshift(first);
+
+                    const len = only.length;
+
+                    let NKF; // Næst Kommende Frist
+
+                    let periodId;
+
+                    for (let i = 0; i < len; i++) {
+                      if (i < len - 1) {
+                        if (exactTimeofDate > only[i].getTime() && exactTimeofDate <= only[i + 1].getTime()) {
+                          NKF = only[i + 1];
+                          periodId = i + 1;
+
+                        } else if (i === len - 1 && exactTimeofDate <= only[len - 1]) {
+                          NKF = only[i];
+                          periodId = i + 1;
+                        }
+                      }
+                    }
+
+                    const nextPeriod = this.getPeriodPadded(period.id, date, 1);
+                    nextPeriod.rate = 1;
+
+                    period.rate = periodId;
+
+                    return NKF ? Observable.of({date: NKF, period: period}) : this._deadline.__getDeadLine__(nextPeriod);
+
+
+
+                    });
+
+
+        } else {
+
+            throw new Error('getRatePeriodOfRatetype needs rate type');
+        }
+
+        
 
     }
 
